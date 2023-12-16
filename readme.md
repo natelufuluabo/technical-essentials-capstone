@@ -31,3 +31,5 @@ We also have S3 buckets to back up our database instances and save media files f
 We use AWS CloudWatch to monitor the state of our EC2 and MySQL instances and receive alarms if there is anything wrong with them.
 
 Note: Each EC2 instance is assigned an IAM Role to be able to access data in the database and the storage buckets.
+
+![My Image](./img/Solution%20Architecture.drawio.png)
