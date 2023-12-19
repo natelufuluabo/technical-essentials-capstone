@@ -32,4 +32,4 @@ We use AWS CloudWatch to monitor the state of our EC2 and MySQL instances and re
 
 Note: Each EC2 instance is assigned an IAM Role to be able to access data in the database and the storage buckets.
 
-![My Image](./img/Solution%20Architecture.drawio.png)
+![My Image](./img/solution.drawio.png)
