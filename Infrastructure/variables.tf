@@ -17,15 +17,27 @@ variable "public_subnet_name_2" {
 }
 
 variable "private_subnet_name_1" {
-  description = "Value of the name tag for the public subnet 1"
+  description = "Value of the name tag for the private subnet 1"
   type        = string
   default     = "private_subnet_name_1"
 }
 
 variable "private_subnet_name_2" {
-  description = "Value of the name tag for the public subnet 2"
+  description = "Value of the name tag for the private subnet 2"
   type        = string
   default     = "private_subnet_name_2"
+}
+
+variable "private_subnet_name_3" {
+  description = "Value of the name tag for the private subnet 3"
+  type        = string
+  default     = "private_subnet_name_3"
+}
+
+variable "private_subnet_name_4" {
+  description = "Value of the name tag for the private subnet 4"
+  type        = string
+  default     = "private_subnet_name_4"
 }
 
 variable "internet_gw_name" {
