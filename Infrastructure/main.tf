@@ -118,7 +118,7 @@ resource "aws_route_table_association" "associate_subnet2" {
 }
 resource "aws_security_group" "web_layer_security_group" {
   name        = "web-layer-security-group"
-  description = "Security group HTTPS"
+  description = "Security group for HTTPS connection from anywhere"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -127,6 +127,27 @@ resource "aws_security_group" "web_layer_security_group" {
     protocol  = "HTTPS"
     cidr_blocks = ["0.0.0.0/0"]  # Allow HTTPS connection from anywhere
     ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+resource "aws_security_group" "application_layer_security_group" {
+  name        = "application-layer-security-group"
+  description = "Security group for HTTPS connections within the VPC"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "HTTPS"
+    cidr_blocks = ["10.0.0.0/16"]  # Allow HTTPS connection local in the vpc only
   }
 
   egress {
