@@ -116,3 +116,24 @@ resource "aws_route_table_association" "associate_subnet2" {
   subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.custom_public_route_table.id
 }
+resource "aws_security_group" "web_layer_security_group" {
+  name        = "web-layer-security-group"
+  description = "Security group HTTPS"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "HTTPS"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow HTTPS connection from anywhere
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
