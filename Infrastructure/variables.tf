@@ -57,3 +57,9 @@ variable "availability_zone_2" {
   type        = string
   default     = "ca-central-1b"
 }
+
+variable "s3_bucket_name" {
+  description = "Name of the S3 bucket for RDS backups"
+  type        = string
+  default     = "rds_backups_bucket"
+}

@@ -184,7 +184,31 @@ resource "aws_s3_bucket" "rds_backups_bucket" {
   force_destroy = true
 
   tags = {
-    Name        = "rds_backups_bucket"
+    Name        = var.s3_bucket_name
     Environment = "Prod"
   }
+}
+
+resource "aws_iam_policy" "s3_access_policy" {
+  name        = "rds_s3_access_policy"
+  description = "IAM policy for RDS to access S3 for backups"
+
+  policy = <<EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+          ],
+          "Resource": [
+            "arn:aws:s3:::${var.s3_bucket_name}",
+            "arn:aws:s3:::${var.s3_bucket_name}/*"
+          ]
+        }
+      ]
+    }
+  EOF
 }
