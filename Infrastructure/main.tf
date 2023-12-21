@@ -212,3 +212,22 @@ resource "aws_iam_policy" "s3_access_policy" {
     }
   EOF
 }
+
+resource "aws_iam_role" "rds_s3_access_role" {
+  name = "RDS-S3-Access-Role"
+  assume_role_policy = <<EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "rds.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    }
+  EOF
+}
+
