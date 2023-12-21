@@ -214,7 +214,7 @@ resource "aws_iam_policy" "s3_access_policy" {
 }
 
 resource "aws_iam_role" "rds_s3_access_role" {
-  name = "RDS-S3-Access-Role"
+  name = "RDS_S3_Access_Role"
   assume_role_policy = <<EOF
     {
       "Version": "2012-10-17",
@@ -229,5 +229,10 @@ resource "aws_iam_role" "rds_s3_access_role" {
       ]
     }
   EOF
+}
+
+resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
+  policy_arn = aws_iam_policy.s3_access_policy.arn
+  role       = aws_iam_role.rds_s3_access_role.name
 }
 
