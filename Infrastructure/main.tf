@@ -124,7 +124,7 @@ resource "aws_security_group" "web_layer_security_group" {
   ingress {
     from_port = 443
     to_port   = 443
-    protocol  = "HTTPS"
+    protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]  # Allow HTTPS connection from anywhere
     ipv6_cidr_blocks = ["::/0"]
   }
@@ -146,15 +146,35 @@ resource "aws_security_group" "application_layer_security_group" {
   ingress {
     from_port = 443
     to_port   = 443
-    protocol  = "HTTPS"
-    cidr_blocks = ["10.0.0.0/16"]  # Allow HTTPS connection local in the vpc only
+    protocol  = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]  # Allow all HTTPS connections within the VPC
   }
 
   egress {
     from_port = 0
     to_port   = 0
     protocol  = "-1"
-    cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic
+    cidr_blocks = ["10.0.0.0/16"]  # Allow all outbound traffic within the VPC
     ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+resource "aws_security_group" "data_layer_security_group" {
+  name        = "data-layer-security-group"
+  description = "Security group for MySQL connections within the VPC"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]  # Allow all MySQL connections within the VPC
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["10.0.0.0/16"]  # Allow all outbound traffic within the VPC
   }
 }
