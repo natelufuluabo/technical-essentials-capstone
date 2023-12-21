@@ -178,3 +178,13 @@ resource "aws_security_group" "data_layer_security_group" {
     cidr_blocks = ["10.0.0.0/16"]  # Allow all outbound traffic within the VPC
   }
 }
+
+resource "aws_s3_bucket" "rds_backups_bucket" {
+  bucket = "rds_backups_bucket"
+  force_destroy = true
+
+  tags = {
+    Name        = "rds_backups_bucket"
+    Environment = "Prod"
+  }
+}
